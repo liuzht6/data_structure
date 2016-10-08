@@ -1,2 +1,8 @@
-# data_structure
-data_structure homework
+# Group Memeber
+- [Ken-reddevil](https://github.com/Ken-reddevil)
+- [Ecr23](https://github.com/ECer23)
+- [Liuzht6](https://github.com/liuzht6)
+And you can contact with any of us throgh the address on our github pages.
+
+# Dialogue
+- [Project2 - Simulation of an Airport](https://github.com/ECer23/data_structure/tree/master/Project2)
