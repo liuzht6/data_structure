@@ -154,7 +154,7 @@ class Airport {
   queue<Plane> landing_queue;  // Planes that waiting to land
   queue<Plane> takeoff_queue;  // Planes that waiting to take off
 
-  // total number
+  // statics
   int idle_time;
   int takeoff_wait;
   int land_wait;
