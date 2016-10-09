@@ -36,7 +36,7 @@ class Airport {
   /* Post: If possible, the Plane current is added to the landing queue and
    *       return true;
    *       Otherwise eturn false
-   * para: current Plane need to land
+   * para: @current, current Plane need to land
    */
   bool can_land(const Plane& current) {
     num_land_requests++;
@@ -52,7 +52,7 @@ class Airport {
   }
 
   /* Post: the Plane current is added to the take-off queue and return true
-   * para: current Plane need to take off
+   * para: @current, current Plane need to take off
    */
   bool can_depart(const Plane& current) {
     num_takeoff_requests++;
@@ -67,6 +67,10 @@ class Airport {
     }
   }
 
+  /* Post: Simulate airport's activity in every time unit 
+   * para: @time, current time
+   *       @moving, plane to perform
+   */
   void activity(int time, Plane& moving) {
     for (auto r : Runways) {
       if (!landing_queue.empty() &&
@@ -94,6 +98,10 @@ class Airport {
     }
   }
 
+  /* Pre: Capacity is full or queue is full
+   * Post: Refuse Plane's request
+   * para: @current, current Plane
+   */
   void refuse(Plane& current) {
     cout << "\tPlane " << current.id();
     if (current.state() == arriving) {
@@ -105,6 +113,9 @@ class Airport {
     }
   }
 
+   /* Post: Program ends and print statics
+    * para: @time, end time of this program
+    */
   void shut_down(int time) {
     cout << left;
     cout << "----------------------------------------------------------------"
