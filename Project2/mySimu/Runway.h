@@ -37,14 +37,14 @@ class Runway {
   Runway_acticity state() { return status; }
 
   /* Post: A Plane takes off
-   * Para: time: time of the Plane need to take off
-   *       moving: the Plane taking off
+   * Para: @time: time of the Plane need to take off
+   *       @moving: the Plane taking off
    */
   void take_off(int time, const Plane& moving) { moving.fly(time); }
 
   /* Post: A Plane lands
-   * Para: time: time of the Plane need to land
-   *       moving: the Plane landing
+   * Para: @time: time of the Plane need to land
+   *       @moving: the Plane landing
    */
   void land(int time, const Plane& moving) { moving.land(time); }
 

@@ -12,7 +12,9 @@
 using namespace std;
 
 class Plane {
- public:  // constructors
+ public:
+
+  // constructors
   Plane() = default;
   Plane(int flt, int time, Plane_status state = null, int p = 1)
       : flt_num(flt), priority(p), clock(time), status(state) {
@@ -20,30 +22,30 @@ class Plane {
          << ((status == arriving) ? "land." : "take off") << endl;
   }
 
-  // Post: Processes a Plane that is landing at the specific time
+  /* Post: Processes a Plane that is landing at the specific time */
   void land(int time) const {
     int wait = time - clock;
     cout << "\tPlane " << flt_num << " landed after " << wait << " time unit"
          << ((wait == 1) ? "" : "s") << " in the land queue" << endl;
   }
 
-  // Post: Processes a Plane that is taking off at the specific time
+  /* Post: Processes a Plane that is taking off at the specific time */
   void fly(int time) const {
     int wait = time - clock;
     cout << "\tPlane " << flt_num << " took off after " << wait << " time unit"
          << ((wait == 1) ? "" : "s") << " in the takeoff queue" << endl;
   }
 
-  // Post: Return the time that the Plane entered the airport system
+  /* Post: Return the time that the Plane entered the airport system */
   int clock_time() const { return clock; }
 
-  // Post: Return Plane's priority
+  /* Post: Return Plane's priority */
   int prior() const { return priority; }
 
-  // Post: Return Plane's id
+  /* Post: Return Plane's id */
   int id() const { return flt_num; }
 
-  // Post: Return Plane's status
+  /* Post: Return Plane's status */
   Plane_status state() const { return status; }
 
  private:
