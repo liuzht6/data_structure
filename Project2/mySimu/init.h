@@ -20,7 +20,7 @@ void initialize(int& end_time, int& capacity, int& queue_limit,
     cout << "Expected number of departures per unit time? " << flush;
     cin >> departure_rate;
     if (arrival_rate < 0.0 || departure_rate < 0.0)
-      cerr << "These ratess must be nonnegative" << endl;
+      cerr << "These rates must be nonnegative" << endl;
     else
       acceptable = true;
     if (acceptable && arrival_rate + departure_rate > 1.0)

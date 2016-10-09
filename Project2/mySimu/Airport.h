@@ -105,7 +105,7 @@ class Airport {
   void refuse(Plane& current) {
     cout << "\tPlane " << current.id();
     if (current.state() == arriving) {
-      cout << "directd to another airport" << endl;
+      cout << " directd to another airport" << endl;
       num_land_refused++;
     } else {
       cout << " told to try to takeoff again later" << endl;
