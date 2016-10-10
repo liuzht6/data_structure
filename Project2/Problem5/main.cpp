@@ -18,7 +18,8 @@ int main() {
 
 	for (int current_time = 0; current_time < end_time; current_time++) {
 		int number_arrivals = distribution_arrival(generator);
-		int number_fuel = distribution_fuel(generator) * 10;
+		int number_fuel = distribution_fuel(generator);
+		cout << number_arrivals << "   " << number_fuel << endl;
 		for (int i = 0; i < number_arrivals; i++) {
 			Plane current_plane(flight_num++, current_time, arriving, number_fuel);
 			if (small_airport.can_land(current_plane) != true)
@@ -30,8 +31,7 @@ int main() {
 			if (small_airport.can_depart(current_plane) != true)
 				small_airport.refuse(current_plane);
 		}
-		Plane moving_plane;
-		small_airport.activity(current_time, moving_plane);
+		small_airport.activity(current_time);
 	}
 	small_airport.shut_down(end_time);
 	system("pause");
