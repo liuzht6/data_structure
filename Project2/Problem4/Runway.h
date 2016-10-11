@@ -61,6 +61,7 @@ class Runway {
   void land(int time, const Plane& moving) { moving.land(time); }
 
   bool special() { return spe; }
+  int num() { return runway_num; }
  private:
   int runway_num;
   Runway_acticity status;

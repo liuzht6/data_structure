@@ -31,7 +31,6 @@ class Airport {
       Runway temp(i + 1);
       Runways.push_back(temp);
     }
-    alltoland == false;
   }
 
   /* Post: If possible, the Plane current is added to the landing queue and
@@ -107,10 +106,10 @@ class Airport {
           num_takeoffs++;
           takeoff_wait += time - moving.clock_time();
       } else {
-        idle_time++;
-        cout << left << setw(8) << time
-             << "No Planes need to land or take off now" << endl;
-        return;
+          idle_time++;
+          cout << left << setw(8) << time
+              << "No Planes activities availble on Runway No." << r.num()
+              << endl;
       }
     }
   }
@@ -132,42 +131,43 @@ class Airport {
     * para: @time, end time of this program
     */
   void shut_down(int time) {
-    cout << left;
-    cout << "----------------------------------------------------------------"
-            "--"
-            "---"
-         << endl;
-    cout << setprecision(4) << fixed;
-    cout << "Simulation has concluded after " << time << " time units." << endl;
-    cout << setw(60) << "Planes asking to deal with: " << num_land_requests + num_takeoff_requests
-         << endl;
-    cout << setw(60) << "Planes asking to land: " << num_land_requests << endl
-         << setw(60) << "Planes asking to take off: " << num_takeoff_requests
-         << endl
-         << setw(60) << "Planes refused for landing: " << num_land_refused
-         << endl
-         << setw(60)
-         << "Planes refused for takeing off: " << num_takeoff_refused << endl
-         << setw(60) << "Planes accepted for landing: " << num_land_accepted
-         << endl
-         << setw(60)
-         << "Planes accepted for taking off: " << num_takeoff_accepted << endl
-         << setw(60) << "Planes that landed: " << num_landings << endl
-         << setw(60) << "Planes that took off: " << num_takeoffs << endl
-         << setw(60)
-         << "Planes left in the landing queue: " << landing_queue.size() << endl
-         << setw(60)
-         << "Planes left in the takeoff queue: " << takeoff_queue.size() << endl
-         << setw(60) << "Percentage of time runway idle: "
-         << 100.0 * ((float)idle_time / (float)time) << "%" << endl
-         << setw(60) << "Average wait in land queue: "
-         << (float)land_wait / (float)num_landings << endl
-         << setw(60) << "Average wait in take off queue: "
-         << (float)takeoff_wait / (float)num_takeoffs << endl
-         << setw(60) << "Average observed rate of planes wanting to land: "
-         << (float)num_land_requests / (float)time << endl
-         << setw(60) << "Average observed rate of planes wanting to take off: "
-         << (float)num_takeoff_requests / (float)time << endl;
+      cout << left;
+      cout << "----------------------------------------------------------------"
+          "--"
+          "---"
+           << endl;
+      cout << setprecision(4) << fixed;
+      cout << "Simulation has concluded after " << time << " time units." << endl;
+      cout << setw(60) << "Planes asking to deal with: " << num_land_requests + num_takeoff_requests
+          << endl;
+      cout << setw(60) << "Planes asking to land: " << num_land_requests << endl
+          << setw(60) << "Planes asking to take off: " << num_takeoff_requests
+          << endl
+          << setw(60) << "Planes refused for landing: " << num_land_refused
+          << endl
+          << setw(60)
+          << "Planes refused for takeing off: " << num_takeoff_refused << endl
+          << setw(60) << "Planes accepted for landing: " << num_land_accepted
+          << endl
+          << setw(60)
+          << "Planes accepted for taking off: " << num_takeoff_accepted << endl
+          << setw(60) << "Planes that landed: " << num_landings << endl
+          << setw(60) << "Planes that took off: " << num_takeoffs << endl
+          << setw(60)
+          << "Planes left in the landing queue: " << landing_queue.size() << endl
+          << setw(60)
+          << "Planes left in the takeoff queue: " << takeoff_queue.size() << endl
+          << setw(60) << "Percentage of time runway idle: "
+          << 100.0 * ((float)idle_time / (float)time) / Runways.size() << "%"
+          << endl
+          << setw(60) << "Average wait in land queue: "
+          << (float)land_wait / (float)num_landings << endl
+          << setw(60) << "Average wait in take off queue: "
+          << (float)takeoff_wait / (float)num_takeoffs << endl
+          << setw(60) << "Average observed rate of planes wanting to land: "
+          << (float)num_land_requests / (float)time << endl
+          << setw(60) << "Average observed rate of planes wanting to take off: "
+          << (float)num_takeoff_requests / (float)time << endl;
 
     cout << "----------------------------------------------------------------"
             "--"
