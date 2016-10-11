@@ -23,14 +23,14 @@ public:  // constructors
 	// Post: Processes a Plane that is landing at the specific time
 	void land(int time) const {
 		int wait = time - clock;
-		cout << "\tPlane " << flt_num << " landed after " << wait << " time unit"
+		cout << time << "\tPlane " << flt_num << " landed after " << wait << " time unit"
 			<< ((wait == 1) ? "" : "s") << " in the land queue" << endl;
 	}
 
 	// Post: Processes a Plane that is taking off at the specific time
 	void fly(int time) const {
 		int wait = time - clock;
-		cout << "\tPlane " << flt_num << " took off after " << wait << " time unit"
+		cout << time << "\tPlane " << flt_num << " took off after " << wait << " time unit"
 			<< ((wait == 1) ? "" : "s") << " in the takeoff queue" << endl;
 	}
 
@@ -51,6 +51,16 @@ public:  // constructors
 
 	// Post: Return Plane's status
 	Plane_status state() const { return status; }
+
+	//overload operator
+	Plane operator = (const Plane & other) {
+		this->flt_num = other.flight_num();
+		this->priority = other.prior();
+		this->clock = other.clock_time();
+		this->fuel = other.fuel_num();
+		this->status = other.state();
+		return *this;
+	}
 
 private:
 	int flt_num;          // flight number of the plane

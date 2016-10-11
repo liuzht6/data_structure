@@ -70,44 +70,53 @@ public:
 		}
 	}
 
-	void activity(int time, Plane& moving) {
+	void activity(int time) {
+		Plane moving;
 		for (auto r : Runways) {
-			if (!landing_queue.empty() &&
-				(r.state() == landing || r.state() == idle)) {
+			if (!landing_queue.empty() && (r.state() == landing || r.state() == idle)) {
 				int flag = 0;
+				int flag1 = 0;
 				auto it = landing_queue.begin();
-				for (it = landing_queue.begin(); it != landing_queue.end(); it++) {
+				for (; it != landing_queue.end();) {
 					if (it->fuel_num() + it->clock_time() < time) {
 						if (first_plane_crash_time == 0) {
 							first_plane_crash_time = time;
 						}
 						cout << time << "\tthe plane " << it->flight_num() << " crash." << endl;
-						it = landing_queue.erase(it);
+						flag1 = 1;
+						if (it + 1 != landing_queue.end()) {
+							landing_queue.erase(it);
+							break;
+						}
+						else {
+							landing_queue.erase(it);
+							break;
+						}
 					}
-					if (it->fuel_num() + it->clock_time() == time) {
-						flag = 1;
-						break;
+					else if (it->fuel_num() + it->clock_time() == time) {
+						if (flag == 0) {
+							flag = 1;
+							moving = *it;
+							cout << 1 << endl;
+							landing_queue.erase(it);
+							break;
+						}
 					}
+					it++;
 				}
-				if (flag) {
-					moving = *it;
-				}
-				else {
+				if (!landing_queue.empty() && flag != 1) {
 					moving = landing_queue.front();
-				}
-				r.land(time, moving);
-				if (flag) {
-					landing_queue.erase(it);
-				}
-				else {
 					landing_queue.erase(landing_queue.begin());
 				}
-				size++;
-				num_landings++;
-				land_wait += time - moving.clock_time();
+				r.land(time, moving);
+				flag = 0;
+				if (flag1 != 1) {
+					size++;
+					num_landings++;
+					land_wait += time - moving.clock_time();
+				}
 			}
-			else if (!takeoff_queue.empty() &&
-				(r.state() == takeoff || r.state() == idle)) {
+			else if (!takeoff_queue.empty() && (r.state() == takeoff || r.state() == idle)) {
 				moving = takeoff_queue.front();
 				r.take_off(time, takeoff_queue.front());
 				takeoff_queue.pop();
