@@ -24,7 +24,7 @@ public:
 		num_land_accepted = num_takeoff_accepted = 0;
 		land_wait = takeoff_wait = idle_time = 0;
 		num_land_refused = num_takeoff_refused = 0;
-		first_plane_crash_time = num_crash = 0;
+		first_plane_crash_time = num_crash = num_of_plane = 0;
 		cout << "How many runways do you want? " << flush;
 		int runway_num;
 		cin >> runway_num;
@@ -81,6 +81,7 @@ public:
 					if (it->fuel_num() + it->clock_time() < time) {
 						if (first_plane_crash_time == 0) {
 							first_plane_crash_time = time;
+							num_of_plane = landing_queue.size() + takeoff_queue.size();
 						}
 						cout << time << "\tthe plane " << it->flight_num() << " crash." << endl;
 						flag1 = 1;
@@ -173,6 +174,7 @@ public:
 		}
 		else {
 			cout << setw(60) << "Time that first plane crash: " << first_plane_crash_time << endl;
+			cout << setw(60) << "Planes that are in the queue when first plane crash: " << num_of_plane << endl;
 		}
 			cout << setw(60)
 			<< "Planes left in the landing queue: " << landing_queue.size() << endl
@@ -211,6 +213,7 @@ private:
 	int num_landings, num_takeoffs;
 	int num_land_accepted, num_takeoff_accepted;
 	int num_land_refused, num_takeoff_refused;
+	int num_of_plane;
 	int num_crash;
 	int first_plane_crash_time;
 };
