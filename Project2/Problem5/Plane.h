@@ -18,6 +18,7 @@ public:  // constructors
 		: flt_num(flt), clock(time), status(state), fuel(f) {
 		cout << left << setw(8) << time << "Plane " << flt_num << " ready to "
 			<< ((status == arriving) ? "land." : "take off") << endl;
+		priority = 0;
 	}
 
 	// Post: Processes a Plane that is landing at the specific time

@@ -48,6 +48,9 @@ public:
 	*/
 	void land(int time, const Plane& moving) { moving.land(time); }
 
+	/* Post: Return the number of the Runway*/
+	int num() { return runway_num; }
+
 private:
 	int runway_num;
 	Runway_acticity status;

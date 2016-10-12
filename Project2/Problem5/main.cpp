@@ -19,7 +19,6 @@ int main() {
 	for (int current_time = 0; current_time < end_time; current_time++) {
 		int number_arrivals = distribution_arrival(generator);
 		int number_fuel = distribution_fuel(generator);
-		cout << number_arrivals << "   " << number_fuel << endl;
 		for (int i = 0; i < number_arrivals; i++) {
 			Plane current_plane(flight_num++, current_time, arriving, number_fuel);
 			if (small_airport.can_land(current_plane) != true)
