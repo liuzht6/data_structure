@@ -64,6 +64,7 @@ class Runway {
           change = 0;
       }
   }
+  int num() { return runway_num; }
  private:
   int runway_num;
   Runway_acticity status;
