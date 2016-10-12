@@ -24,7 +24,7 @@ public:
 		num_land_accepted = num_takeoff_accepted = 0;
 		land_wait = takeoff_wait = idle_time = 0;
 		num_land_refused = num_takeoff_refused = 0;
-		first_plane_crash_time = 0;
+		first_plane_crash_time = num_crash = 0;
 		cout << "How many runways do you want? " << flush;
 		int runway_num;
 		cin >> runway_num;
@@ -84,12 +84,13 @@ public:
 						}
 						cout << time << "\tthe plane " << it->flight_num() << " crash." << endl;
 						flag1 = 1;
+						num_crash++;
 						if (it + 1 != landing_queue.end()) {
-							landing_queue.erase(it);
-							break;
+							it = landing_queue.erase(it);
+							continue;
 						}
 						else {
-							landing_queue.erase(it);
+							landing_queue.pop_back();
 							break;
 						}
 					}
@@ -97,20 +98,23 @@ public:
 						if (flag == 0) {
 							flag = 1;
 							moving = *it;
-							cout << 1 << endl;
-							landing_queue.erase(it);
 							break;
 						}
 					}
 					it++;
 				}
-				if (!landing_queue.empty() && flag != 1) {
-					moving = landing_queue.front();
-					landing_queue.erase(landing_queue.begin());
-				}
-				r.land(time, moving);
-				flag = 0;
-				if (flag1 != 1) {
+				if (!landing_queue.empty()) {
+					if (flag != 1) {
+						moving = landing_queue.front();
+					}
+					r.land(time, moving);
+					if (flag != 1) {
+						landing_queue.erase(landing_queue.begin());
+					}
+					else {
+						landing_queue.erase(it);
+					}
+					flag = 0;
 					size++;
 					num_landings++;
 					land_wait += time - moving.clock_time();
@@ -127,8 +131,7 @@ public:
 			else {
 				idle_time++;
 				cout << left << setw(8) << time
-					<< "No Planes need to land or take off now" << endl;
-				return;
+					<< "No Planes activity available on Runway No. " << r.num() << endl;
 			}
 		}
 	}
@@ -137,11 +140,9 @@ public:
 		cout << "\tPlane " << current.id();
 		if (current.state() == arriving) {
 			cout << " directd to another airport" << endl;
-			num_land_refused++;
 		}
 		else {
 			cout << " told to try to takeoff again later" << endl;
-			num_takeoff_refused++;
 		}
 	}
 
@@ -162,9 +163,11 @@ public:
 			<< setw(60) << "Planes accepted for landing: " << num_land_accepted
 			<< endl
 			<< setw(60)
-			<< "Planes accepted for taking off: " << num_takeoff_accepted << endl
-			<< setw(60) << "Planes that landed: " << num_landings << endl
-			<< setw(60) << "Planes that took off: " << num_takeoffs << endl;
+			<< "Planes accepted for taking off: " << num_takeoff_accepted << endl;
+		num_landings = num_land_accepted - num_crash;
+		cout << setw(60) << "Planes that landed: " << num_landings << endl
+			<< setw(60) << "Planes that took off: " << num_takeoffs << endl
+			<< setw(60) << "Planes that crashed: " << num_crash << endl;
 		if (first_plane_crash_time == 0) {
 			cout << setw(60) << "Time that first plane crash: " << "no plane crash." << endl;
 		}
@@ -208,6 +211,7 @@ private:
 	int num_landings, num_takeoffs;
 	int num_land_accepted, num_takeoff_accepted;
 	int num_land_refused, num_takeoff_refused;
+	int num_crash;
 	int first_plane_crash_time;
 };
 
