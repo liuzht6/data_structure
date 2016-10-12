@@ -23,26 +23,14 @@ class Runway {
     switch (p) {
       case 1:
         status = idle;
-        spe = false;
         break;
       case 2:
         status = landing;
-        cout << "whether special? (1-yes, 2-no) ";
-        int n;
-        cin >> n;
-        if (n == 1) {
-            spe = true;
-            cout << "it can be used for another way for some special times" << endl;
-        } else {
-            spe = false;
-        }
         break;
       case 3:
         status = takeoff;
-        spe = false;
         break;
     }
-
   }
 
   /* Post: Return the status of the Runway*/
@@ -60,12 +48,12 @@ class Runway {
    */
   void land(int time, const Plane& moving) { moving.land(time); }
 
-  bool special() { return spe; }
+  /* Post: Return the number of Runway*/
   int num() { return runway_num; }
+
  private:
   int runway_num;
   Runway_acticity status;
-  bool spe;
 };
 
 #endif  // !RUNWAY_H_
