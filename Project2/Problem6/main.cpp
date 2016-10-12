@@ -31,5 +31,6 @@ int main() {
     small_airport.activity(current_time, moving_plane);
   }
   small_airport.shut_down(end_time);
+  system("pause");
   return 0;
 }
