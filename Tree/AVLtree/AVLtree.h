@@ -35,11 +35,17 @@ class AVLtree {
 
   void insertTreeNode(treeNode<T>*& node, const T& val);
   void insert(const T& val) { this->insertTreeNode(this->root, val); }
-  void removeTreeNode(treeNode<T>* node);
+  
+  void removeTreeNode(treeNode<T>*& r, const T& val);
+  void remove(const T& val) { this->removeTreeNode(this->root, val); }
+
+  treeNode<T>* searchTreeNode(const T& val);
 
   void tryRotate(treeNode<T>* node);
 
  protected:
+  void removeTreeNode(treeNode<T>*& r);
+
   void postOrderTraversal(treeNode<T>* root, void (*visit)(treeNode<T>*));
   void preOrderTraversal(treeNode<T>* root, void (*visit)(treeNode<T>*));
   int getHeight(treeNode<T>* root);
