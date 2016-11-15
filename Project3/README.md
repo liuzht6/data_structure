@@ -49,3 +49,5 @@ A member has its child, parents and he/she can marry with others.
 5. Web or application(optional)
 
 
+# Notes
+1. Case statements are only labels. This means the compiler will interpret this as a jump directly to the label. In C++, the problem here is one of scope. Your curly brackets define the scope as everything inside the switch statement. This means that you are left with a scope where a jump will be performed further into the code skipping the initialization. The correct way to handle this is to define a scope specific to that case statement and define your variable within it.
