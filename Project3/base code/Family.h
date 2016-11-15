@@ -2,6 +2,7 @@
 #define FAMILY_H
 #include <string>
 #include <vector>
+#include <iostream>
 #include "sex.h"
 #include "Person.h"
 using namespace std;
