@@ -109,4 +109,9 @@ Node* RLrotate(Node* root) {
 }
 ```
 
-# 
+# Remove
+Remove a node in AVLtree is similar to that in a Binary Search Tree(BST). Removing a node in BST has mainly 3 possible situation.  
+- Removing a node with no children: simply remove the node from the tree.
+- Removing a node with one child: remove the node and replace it with its child.
+- Removing a node with two children. Choose the biggest one in its right child or the smallest one in its right child to replace it. 
+After removing, we need to check the balance, which is similar to insertion.
