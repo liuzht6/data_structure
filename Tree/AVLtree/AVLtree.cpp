@@ -9,20 +9,20 @@ void AVLtree<T>::insertTreeNode(treeNode<T>*& r, const T& val) {
   } else {
     treeNode<T>* p = r;
     if (val < r->data) {
-      insertTreeNode(r->left, val);
-      if (balance(r) == false) {
+      this->insertTreeNode(r->left, val);
+      if (!this->balance(r)) {
         if (val < r->left->data)
-          r = LLrotate(r);
+          r = this->LLrotate(r);
         else
-          r = LRrotate(r);
+          r = this->LRrotate(r);
       }
     } else {
-      insertTreeNode(r->right, val);
-      if (balance(r) == false) {
+      this->insertTreeNode(r->right, val);
+      if (!this->balance(r)) {
         if (val > r->right->data)
-          r = RRrotate(r);
+          r = this->RRrotate(r);
         else
-          r = RLrotate(r);
+          r = this->RLrotate(r);
       }
     }
   }
@@ -33,17 +33,33 @@ void AVLtree<T>::removeTreeNode(treeNode<T>*& r, const T& val) {
   if (r == nullptr) {
     cerr << "Node " << val << " doesn't exist in this AVL tree" << endl;
     return;
-  } else if (r->data == val) {
-    removeTreeNode(r);
   } else {
-    if (val < r->data) {
-      removeTreeNode(r->left, val);
+    if (r->data == val) {
+      this->removeTreeNode(r);
+    } else if (val < r->data) {
+      this->removeTreeNode(r->left, val);
     } else {
-      removeTreeNode(r->right, val);
+      this->removeTreeNode(r->right, val);
     }
+    if (!balance(r))
+      rotateAfterRemove(r);
   }
 }
 
+template <typename T>
+void AVLtree<T>::rotateAfterRemove(treeNode<T>*& r) {
+  if (this->getHeight(r->right) - this->getHeight(r->left) == 2) {
+    if (this->getHeight(r->right->right) > this->getHeight(r->right->left))
+      r = this->RRrotate(r);
+    else
+      r = this->RLrotate(r);
+  } else if (this->getHeight(r->left) - this->getHeight(r->left->right) == 2) {
+    if (this->getHeight(r->left->left) > this->getHeight(r->left->right))
+      r = this->LLrotate(r);
+    else
+      r = this->LRrotate(r);
+  }
+}
 
 // protected
 template <typename T>
@@ -54,21 +70,21 @@ void AVLtree<T>::removeTreeNode(treeNode<T>*& r) {
     delete (r);
     r = nullptr;
   } else if (r->left != nullptr) {
-    auto p = r->left;
-    while (p->right != nullptr) {
-      p = p->right;
+    auto p = &(r->left);
+    while ((*p)->right != nullptr) {
+      p = &((*p)->right);
     }
-    r->data = p->data;
-    delete (p);
-    p = nullptr;
+    r->data = (*p)->data;
+    delete (*p);
+    *p = nullptr;
   } else if (r->right != nullptr) {
-    auto p = r->right;
-    while (p->left != nullptr) {
-      p = p->left;
+    auto p = &(r->right);
+    while ((*p)->left != nullptr) {
+      p = &((*p)->left);
     }
-    r->data = p->data;
-    delete (p);
-    p = nullptr;
+    r->data = (*p)->data;
+    delete (*p);
+    (*p) = nullptr;
   }
 }
 
@@ -94,8 +110,8 @@ treeNode<T>* AVLtree<T>::LLrotate(treeNode<T>* node) {
 
 template <typename T>
 treeNode<T>* AVLtree<T>::LRrotate(treeNode<T>* node) {
-  node->left = RRrotate(node->left);
-  return LLrotate(node);
+  node->left = this->RRrotate(node->left);
+  return this->LLrotate(node);
 }
 
 template <typename T>
@@ -108,26 +124,26 @@ treeNode<T>* AVLtree<T>::RRrotate(treeNode<T>* node) {
 
 template <typename T>
 treeNode<T>* AVLtree<T>::RLrotate(treeNode<T>* node) {
-  node->right = LLrotate(node->right);
-  return RRrotate(node);
+  node->right = this->LLrotate(node->right);
+  return this->RRrotate(node);
 }
 
 template <typename T>
-void AVLtree<T>::preOrderTraversal(treeNode<T>* root,
-                                   void (*visit)(treeNode<T>*)) {
+void AVLtree<T>::preOrderTraversal(treeNode<T>*& root,
+                                   void (*visit)(treeNode<T>*&)) {
   if (root != NULL) {
     visit(root);
-    preOrderTraversal(root->left, visit);
-    preOrderTraversal(root->right, visit);
+    this->preOrderTraversal(root->left, visit);
+    this->preOrderTraversal(root->right, visit);
   }
 }
 
 template <typename T>
-void AVLtree<T>::postOrderTraversal(treeNode<T>* root,
-                                    void (*visit)(treeNode<T>*)) {
+void AVLtree<T>::postOrderTraversal(treeNode<T>*& root,
+                                    void (*visit)(treeNode<T>*&)) {
   if (root != NULL) {
-    postOrderTraversal(root->left, visit);
-    postOrderTraversal(root->right, visit);
+    this->postOrderTraversal(root->left, visit);
+    this->postOrderTraversal(root->right, visit);
     visit(root);
   }
 }
@@ -137,7 +153,7 @@ int AVLtree<T>::getHeight(treeNode<T>* root) {
   if (root == nullptr)
     return 0;
   else
-    return 1 + max(getHeight(root->left), getHeight(root->right));
+    return 1 + max(this->getHeight(root->left), this->getHeight(root->right));
 }
 
 template <typename T>
@@ -145,7 +161,7 @@ bool AVLtree<T>::balance(treeNode<T>* root) {
   if (root == nullptr)
     return true;
   else
-    return abs(getHeight(root->left) - getHeight(root->right)) < 2;
+    return abs(this->getHeight(root->left) - this->getHeight(root->right)) < 2;
 }
 
 /**

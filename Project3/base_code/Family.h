@@ -29,7 +29,7 @@ class Family {
   void print(Person* root, int level) {
     if (root != NULL) {
       if (root != NULL) {
-        for (int i = 0; i < level; i++) cout << '\t';
+        for (int i = 0; i < level; i++) cout << "  ";
         cout << root->selfName << endl;
         print(root->partner, level + 1);
         print(root->child, level + 1);
@@ -38,12 +38,15 @@ class Family {
   }
 
   // add partner
-  void marry_other(Person* wife, string name) {
+  bool marry_other(Person* wife, string name) {
     Person* man = NULL;
     man = find_person(founder, name);
     if (man != NULL) {
       man->partner = wife;
       members_total++;
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -71,6 +74,7 @@ class Family {
 
   Person* find_front(Person* found, string name) {
     if (found != nullptr) {
+      cout << found->selfName << " " << name << endl;
       if (found->child != nullptr)
         if (found->child->selfName == name) return found;
       find_front(found->partner, name);
@@ -88,6 +92,7 @@ class Family {
       return nullptr;
     }
   }
+
   // get founder
   Person* getFounder() { return founder; }
   // get familyname
@@ -96,8 +101,8 @@ class Family {
   int getSum_members() { return members_total; }
 
  private:
-  string familyName;
   Person* founder;
+  string familyName;
   int members_total;
 };
 
