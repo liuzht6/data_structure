@@ -6,21 +6,17 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <memory>
 using namespace std;
 class FamilyAgenda {
 public:
   FamilyAgenda() : familyNumber(0) {}
 
-  ~FamilyAgenda() {
-
-  }
-
   void creatFamily() {
     cout << "Please enter the family's name" << endl;
     string familyname;
     cin >> familyname;
-    Family tmp(familyname);
-    Family* temp = &tmp;
+    Family* temp = new Family(familyname);
     if (familyMap.find(familyname) != familyMap.end())
       cout << "Family " << familyname << " already exist" << endl;
     else
