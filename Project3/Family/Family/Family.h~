@@ -77,7 +77,6 @@ class Family {
   // add child
   void bornBaby(string name) {
     Person *daddy = queryPersonByName(name);
-    Person *mom = daddy->partner;
     if (founder->name == name) {
       Person *childChain = founder->partner;
       while (childChain->child != nullptr) {

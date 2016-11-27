@@ -1,0 +1,27 @@
+{
+    "east": [{
+        "name": "Library",
+        "intro": "This is Libaray",
+        "distance": {
+            "Canteen": 100,
+            "Dormitory": 200,
+            "Library": 0
+        }
+    }, {
+        "name": "Canteen",
+        "intro": "This is Canteen",
+        "distance": {
+            "Library": 100,
+            "Dormitory": 200,
+            "Canteen": 0
+        }
+    }, {
+        "name": "Dormitory",
+        "intro": "This is Dormitory",
+        "distance": {
+            "Canteen": 200,
+            "Library": 200,
+            "Dormitory": 0
+        }
+    }]
+}
