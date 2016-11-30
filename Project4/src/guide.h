@@ -44,6 +44,40 @@ void readFromFile(vector<campusMap>& v) {
   fs.close();
 }
 
+void writeToFile() {
+  fstream fs;
+  fs.open("../storage/database.json");
+
+  vector<string> campusList = {"east", "north", "south", "zhuhai", "shenzhen"};
+
+  Reader reader;
+  Value root;
+
+  if (!reader.parse(fs, root, false)) return;
+
+  for (auto e : campusList) {
+    Value spots = root[e];
+    vector<vertex> sights;
+    if (spots != nullptr) {
+      for (int i = 0; i < spots.size(); ++i) {
+        Value oneSpot = spots[i];
+        string strName = oneSpot["name"].asString();
+        string strIntro = oneSpot["intro"].asString();
+        vertex tmpSight(sight(strName, strIntro));
+
+        Json::Value distance = oneSpot["distance"];
+        for (int j = 0; j < spots.size(); j++) {
+          string tempName = spots[j]["name"].asString();
+          tmpSight.addEdge(tempName, distance[tempName].asInt());
+        }
+        sights.push_back(tmpSight);
+      }
+      v.push_back(campusMap(sights, e + "Campus"));
+    }
+  }
+  fs.close();
+}
+
 class guide {
  public:
   guide() {
