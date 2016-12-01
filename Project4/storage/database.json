@@ -5,7 +5,7 @@
         "distance": {
             "Canteen": 100,
             "Dormitory": 200,
-            "Library": 0
+            "Sun-Yat-Sen": 50
         }
     }, {
         "name": "Canteen",
@@ -13,7 +13,7 @@
         "distance": {
             "Library": 100,
             "Dormitory": 200,
-            "Canteen": 0
+            "Sun-Yat-Sen": 50
         }
     }, {
         "name": "Dormitory",
@@ -21,7 +21,14 @@
         "distance": {
             "Canteen": 200,
             "Library": 200,
-            "Dormitory": 0
+            "Sun-Yat-Sen": 50
+        }
+    }, {
+        "name": "Sun-Yat-Sen",
+        "intro": "This is Sun Yat-Sen",
+        "distance": {
+            "Canteen": 20,
+            "Library": 20
         }
     }]
 }

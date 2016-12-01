@@ -2,5 +2,5 @@
 
 int main() {
   guide Siri;
-  Siri.thisMap.distanceDetect();
+  Siri.thisMap.findShortestPath("Sun-Yat-Sen", "Dormitory");
 }

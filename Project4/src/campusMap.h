@@ -1,15 +1,18 @@
 #ifndef CAMPUSMAP_H_
 #define CAMPUSMAP_H_
 
-#include <string>
-#include <vector>
+#include <iostream>
+#include <map>
 #include <memory>
 #include <queue>
-#include <map>
 #include <set>
-#include <iostream>
+#include <string>
+#include <stack>
+#include <vector>
 #include "sight.h"
 using namespace std;
+
+#define INFINITY_LENGTH 99999
 
 struct edgeVertex {
   string name;
@@ -23,8 +26,9 @@ struct vertex {
   sight sightSpot;
   shared_ptr<edgeVertex> firstEdge;
   string name;
-  vertex(sight s, edgeVertex* f = nullptr)
-      : sightSpot(s), firstEdge(f), name(sightSpot.getSightName()) {}
+  vertex(sight s, edgeVertex* f = nullptr) : sightSpot(s), firstEdge(f) {
+    name = s.getSightName();
+  }
 
   void addEdge(string name, int l) {
     auto edgePointer = this->firstEdge;
@@ -52,56 +56,75 @@ class campusMap {
 
   void addVertex(vertex& v) { spots.push_back(v); }
 
-  // using Dijkstra algorithm
-  void distanceDetect() {
-    for (auto oneSpot : spots) {
-      set<string> S, Q;  // S: detected, empty set
-                         // Q: not detected, set of all verticles
+  void findShortestPath(string from, string to) {
+    set<string> Q;
+    map<string, int> dist;
+    map<string, string> prev;
+    for (auto e : spots) {
+      dist[e.name] = INFINITY_LENGTH;
+      prev[e.name] = "";
+      Q.insert(e.name);
+    }
 
-      map<string, int> distance;
-      for (auto e : spots) Q.insert(e.name);
-      distance[oneSpot.name] = 0;
+    dist[from] = -1;
 
-      while (Q.empty()) {
-        auto minDistance = extractMin(Q, S);
-        if (distance.find(minDistance.first) == distance.end() ||
-            distance[minDistance.first] > minDistance.second) {
-          Q.erase(minDistance.first);
-          S.insert(minDistance.first);
-        }
-      }
+    while (!Q.empty()) {
+      auto u = extractMin(Q, dist);
+      Q.erase(u);
 
-      auto edge = oneSpot.firstEdge;
+      auto edge = this->findSight(u)->firstEdge;
       while (edge != nullptr) {
-        if (distance[this->findSight(edge->name)->name] >
-            edge->length) {
-          edge->length =
-              distance[this->findSight(edge->name)->name];
+        auto alt = dist[u] + edge->length;
+        if (dist[edge->name] == 0 || alt < dist[edge->name]) {
+          dist[edge->name] = alt;
+          prev[edge->name] = u;
         }
+        edge = edge->next;
       }
     }
+
+    stack<string> path;
+    auto previousNode = prev[to];
+    while (previousNode != from) {
+      path.push(previousNode);
+      previousNode = prev[previousNode];
+    }
+
+    cout << "the Path is: ";
+    cout << from;
+    while (!path.empty()) {
+      cout << "->" << path.top();
+      path.pop();
+    }
+    cout << "->" << to << endl;
+    cout << "the legnth is: " << dist[to] << endl;
   }
 
-  pair<string, int> extractMin(set<string> Q, set<string> S) {
-    pair<string, int> minDistance;
-    for (auto s : S) {
-      for (auto e : Q) {
-        auto edge = this->findSight(s)->firstEdge;
-        while (edge != nullptr) {
-          if (minDistance.second > edge->length &&
-              edge->name == this->findSight(e)->name) {
-            minDistance.first = edge->name;
-            minDistance.second = edge->length;
-          }
-          edge = edge->next;
-        }
+  string extractMin(set<string>& Q, const map<string, int>& dist) {
+    pair<string, int> minVertex;
+    minVertex.second = INFINITY_LENGTH;
+    for (auto e : dist) {
+      if (Q.find(e.first) != Q.end() && e.second != 0 &&
+          e.second < minVertex.second) {
+        minVertex = e;
       }
     }
-    return minDistance;
+    return minVertex.first;
+  }
+
+  int findDistance(string f, string t) {
+    auto fromIt = this->findSight(f);
+    auto edge = fromIt->firstEdge;
+    while (edge != nullptr) {
+      if (edge->name == t)
+        return edge->length;
+      else
+        edge = edge->next;
+    }
+    return INFINITY_LENGTH;
   }
 
   vector<vertex> spots;
-
   string campusName;
 };
 

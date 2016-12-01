@@ -24,51 +24,18 @@ void readFromFile(vector<campusMap>& v) {
   for (auto e : campusList) {
     Value spots = root[e];
     vector<vertex> sights;
-    if (spots != nullptr) {
+    if (!spots.empty()) {
       for (int i = 0; i < spots.size(); ++i) {
         Value oneSpot = spots[i];
         string strName = oneSpot["name"].asString();
         string strIntro = oneSpot["intro"].asString();
-        vertex tmpSight(sight(strName, strIntro));
+        vertex tmpSight(sight(strName, strIntro), nullptr);
 
         Json::Value distance = oneSpot["distance"];
         for (int j = 0; j < spots.size(); j++) {
           string tempName = spots[j]["name"].asString();
-          tmpSight.addEdge(tempName, distance[tempName].asInt());
-        }
-        sights.push_back(tmpSight);
-      }
-      v.push_back(campusMap(sights, e + "Campus"));
-    }
-  }
-  fs.close();
-}
-
-void writeToFile() {
-  fstream fs;
-  fs.open("../storage/database.json");
-
-  vector<string> campusList = {"east", "north", "south", "zhuhai", "shenzhen"};
-
-  Reader reader;
-  Value root;
-
-  if (!reader.parse(fs, root, false)) return;
-
-  for (auto e : campusList) {
-    Value spots = root[e];
-    vector<vertex> sights;
-    if (spots != nullptr) {
-      for (int i = 0; i < spots.size(); ++i) {
-        Value oneSpot = spots[i];
-        string strName = oneSpot["name"].asString();
-        string strIntro = oneSpot["intro"].asString();
-        vertex tmpSight(sight(strName, strIntro));
-
-        Json::Value distance = oneSpot["distance"];
-        for (int j = 0; j < spots.size(); j++) {
-          string tempName = spots[j]["name"].asString();
-          tmpSight.addEdge(tempName, distance[tempName].asInt());
+          if (tempName != strName && distance[tempName].asInt() != 0)
+            tmpSight.addEdge(tempName, distance[tempName].asInt());
         }
         sights.push_back(tmpSight);
       }
@@ -89,7 +56,7 @@ class guide {
 
   void start() {
     cout << "Welcome to SYSU, Please choose which campus to sightsee" << endl;
-    cout << "1 : East Campus" << endl;
+    cout << "1 : East Campus | 0 : exit" << endl;
     int num;
     cin >> num;
     switch (num) {
@@ -102,12 +69,16 @@ class guide {
         }
         break;
       }
+      case 0: {
+        cout << "Thank You, Goodbye" << endl;
+        return;
+      }
       default:
         cout << "Please try again" << endl;
         break;
     }
     cout << "Please enter what you want to do" << endl;
-    cout << "1 : Show sight" << endl;
+    cout << "1 : Show sight | 0 : exit" << endl;
     int functionNum;
     int flag = 1;
     while (flag == 1 && cin >> functionNum) {
