@@ -70,7 +70,18 @@ class campusMap {
 
     while (!Q.empty()) {
       auto u = extractMin(Q, dist);
+      
+      if (u == "") {
+        if (dist[to] == INFINITY_LENGTH) {
+          cout << "Found failed" << endl;
+          return;
+        } else {
+          break;
+        }
+      }
+
       Q.erase(u);
+      
 
       auto edge = this->findSight(u)->firstEdge;
       while (edge != nullptr) {
