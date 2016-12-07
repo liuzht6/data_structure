@@ -1,0 +1,107 @@
+{
+    "east": [{
+        "name": "Library",
+        "intro": "This is Libaray",
+        "distance": {
+            "Public-Teaching-Building": 100,
+            "Executive-Conference-Center": 100,
+            "Gymnasium": 50,
+            "East-Stadium": 150
+        }
+    }, {
+        "name": "Public-Teaching-Building",
+        "intro": "This is Public Teaching Building",
+        "distance": {
+            "Library": 100,
+            "Executive-Conference-Center": 88,
+            "North-Gate-Archway": 120,
+            "Software-School": 250
+        }
+    }, {
+        "name": "Executive-Conference-Center",
+        "intro": "This is Executive Conference Center",
+        "distance": {
+            "Library": 100,
+            "Public-Teaching-Building": 88,
+            "North-Laboratory-Center": 300
+        }
+    }, {
+        "name": "North-Gate-Archway",
+        "intro": "This is North Gate Archway",
+        "distance": {
+            "Library": 200,
+            "Shensiyuan": 2200,
+            "Main-Canteen": 2100,
+            "Software-School": 300
+        }
+    }, {
+        "name": "Software-School",
+        "intro": "This is Software School",
+        "distance": {
+            "Public-Teaching-Building": 250,
+            "North-Gate-Archway": 300
+        }
+    }, {
+        "name": "North-Laboratory-Center",
+        "intro": "This is North Laboratory Center",
+        "distance": {
+            "East-Stadium": 800,
+            "West-Stadium": 600,
+            "Executive-Conference-Center": 300
+        }
+    }, {
+        "name": "West-Stadium",
+        "intro": "This is West Stadium",
+        "distance": {
+            "Library": 100,
+            "Gymnasium": 150
+        }
+    }, {
+        "name": "Gymnasium",
+        "intro": "This is Gymnasium",
+        "distance": {
+            "Library": 50,
+            "East-Stadium": 50,
+            "Main-Canteen": 666,
+            "West-Stadium": 150
+        }
+    }, {
+        "name": "East-Stadium",
+        "intro": "This is East-Stadium",
+        "distance": {
+            "Gymnasium": 50,
+            "Software-School": 400,
+            "Public-Teaching-Building": 300
+        }
+    }, {
+        "name": "Mingdeyuan",
+        "intro": "This is Mingdeyuan",
+        "distance": {
+            "Main-Canteen": 100,
+            "Gymnasium": 120
+        }
+    }, {
+        "name": "Shensiyuan",
+        "intro": "This is Shensiyuan",
+        "distance": {
+            "Main-Canteen": 50,
+            "Mingdeyuan": 150
+        }
+    }, {
+        "name": "Center-Gargen",
+        "intro": "This is Center Gargen",
+        "distance": {
+            "Main-Canteen": 50,
+            "Library": 650,
+            "Shensiyuan": 50
+        }
+    }, {
+        "name": "Main-Canteen",
+        "intro": "This is Main Canteen",
+        "distance": {
+            "Gymnasium": 666,
+            "Shensiyuan": 50,
+            "Mingdeyuan": 100
+        }
+    }]
+}
